@@ -1,0 +1,550 @@
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
+import apiService from "../../services/api";
+import "./Payment.css";
+
+const Payment = () => {
+  const navigate = useNavigate();
+  const { cartItems, getTotalPrice, clearCart } = useContext(CartContext);
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [orderRef, setOrderRef] = useState("");
+  
+  // Form states
+  const [formData, setFormData] = useState({
+    // Shipping Info
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+    
+    // Card Info
+    cardNumber: "",
+    cardName: "",
+    expiryDate: "",
+    cvv: "",
+    
+    // UPI
+    upiId: "",
+    
+    // Net Banking
+    bankName: ""
+  });
+
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (cartItems.length === 0 && !orderPlaced) {
+      navigate("/cart");
+    }
+  }, [cartItems, navigate, orderPlaced]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setSubmitError("");
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Shipping validation
+    if (!formData.fullName.trim()) newErrors.fullName = "Name is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid";
+    if (!formData.phone.trim()) newErrors.phone = "Phone is required";
+    else if (!/^[0-9]{10}$/.test(formData.phone)) newErrors.phone = "Phone must be 10 digits";
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    if (!formData.city.trim()) newErrors.city = "City is required";
+    if (!formData.state.trim()) newErrors.state = "State is required";
+    if (!formData.pincode.trim()) newErrors.pincode = "Pincode is required";
+    else if (!/^[0-9]{6}$/.test(formData.pincode)) newErrors.pincode = "Pincode must be 6 digits";
+    
+    // Payment method validation
+    if (paymentMethod === "card") {
+      if (!formData.cardNumber.trim()) newErrors.cardNumber = "Card number is required";
+      else if (!/^[0-9]{16}$/.test(formData.cardNumber.replace(/\s/g, ""))) newErrors.cardNumber = "Invalid card number";
+      if (!formData.cardName.trim()) newErrors.cardName = "Cardholder name is required";
+      if (!formData.expiryDate.trim()) newErrors.expiryDate = "Expiry date is required";
+      else if (!/^(0[1-9]|1[0-2])\/[0-9]{2}$/.test(formData.expiryDate)) newErrors.expiryDate = "Format: MM/YY";
+      if (!formData.cvv.trim()) newErrors.cvv = "CVV is required";
+      else if (!/^[0-9]{3,4}$/.test(formData.cvv)) newErrors.cvv = "Invalid CVV";
+    } else if (paymentMethod === "upi") {
+      if (!formData.upiId.trim()) newErrors.upiId = "UPI ID is required";
+      else if (!/@/.test(formData.upiId)) newErrors.upiId = "Invalid UPI ID";
+    } else if (paymentMethod === "netbanking") {
+      if (!formData.bankName) newErrors.bankName = "Please select a bank";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsProcessing(true);
+
+    try {
+      const subtotal = getTotalPrice();
+      const tax = Math.round(subtotal * 0.18);
+      const total = subtotal + tax;
+
+      const orderPayload = {
+        customer: {
+          fullName: formData.fullName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          address: formData.address.trim(),
+          city: formData.city.trim(),
+          state: formData.state.trim(),
+          pincode: formData.pincode.trim()
+        },
+        items: cartItems.map((item) => ({
+          id: item.id,
+          name: item.name,
+          model: item.model,
+          price: Number(String(item.price).replace(/[^0-9]/g, "")) || 0,
+          quantity: item.quantity || 1,
+          selectedSize: item.selectedSize || item.size || "",
+          selectedColor: item.selectedColor || item.color || "",
+          selectedDimension: item.selectedDimension || item.dimension || "",
+          image: item.image || "",
+          type: item.type || "other"
+        })),
+        payment: {
+          method: paymentMethod,
+          // Send safe metadata only; never send CVV/full card data to this app backend.
+          last4: paymentMethod === "card" ? formData.cardNumber.replace(/\s/g, "").slice(-4) : undefined,
+          upiId: paymentMethod === "upi" ? formData.upiId.trim() : undefined,
+          bankName: paymentMethod === "netbanking" ? formData.bankName : undefined
+        },
+        pricing: {
+          subtotal,
+          tax,
+          shipping: 0,
+          total
+        },
+        currency: "INR"
+      };
+
+      const response = await apiService.createOrder(orderPayload);
+
+      setOrderRef(response?.order?.orderId || "");
+      setOrderPlaced(true);
+
+      setTimeout(() => {
+        clearCart();
+        navigate("/");
+      }, 3000);
+    } catch (error) {
+      setSubmitError(error.message || "Unable to place order right now. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const formatCardNumber = (value) => {
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    const matches = v.match(/\d{4,16}/g);
+    const match = (matches && matches[0]) || "";
+    const parts = [];
+    
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+    }
+    
+    if (parts.length) {
+      return parts.join(" ");
+    } else {
+      return value;
+    }
+  };
+
+  const formatExpiryDate = (value) => {
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    if (v.length >= 2) {
+      return `${v.substring(0, 2)}/${v.substring(2, 4)}`;
+    }
+    return v;
+  };
+
+  if (orderPlaced) {
+    return (
+      <div className="payment-page">
+        <div className="payment-container">
+          <div className="order-success">
+            <div className="success-icon">✓</div>
+            <h1>Order Placed Successfully!</h1>
+            <p>Thank you for your purchase. Your order is being processed.</p>
+            <p className="order-id">Order ID: {orderRef || "Generated"}</p>
+            <p className="redirect-msg">Redirecting to home...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const totalAmount = getTotalPrice();
+  const totalWithTax = Math.round(totalAmount * 1.18);
+  const taxAmount = Math.round(totalAmount * 0.18);
+
+  return (
+    <div className="payment-page">
+      <div className="payment-container">
+        <h1 className="payment-title">Secure Checkout</h1>
+        
+        <div className="payment-layout">
+          {/* Left Column - Forms */}
+          <div className="payment-forms">
+            <form onSubmit={handleSubmit}>
+              {/* Shipping Information */}
+              <section className="form-section">
+                <h2>Shipping Information</h2>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label>Full Name *</label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      className={errors.fullName ? "error" : ""}
+                      placeholder="John Doe"
+                    />
+                    {errors.fullName && <span className="error-msg">{errors.fullName}</span>}
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Email *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={errors.email ? "error" : ""}
+                      placeholder="john@example.com"
+                    />
+                    {errors.email && <span className="error-msg">{errors.email}</span>}
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Phone Number *</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className={errors.phone ? "error" : ""}
+                      placeholder="9876543210"
+                      maxLength="10"
+                    />
+                    {errors.phone && <span className="error-msg">{errors.phone}</span>}
+                  </div>
+                  
+                  <div className="form-group full-width">
+                    <label>Address *</label>
+                    <textarea
+                      name="address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      className={errors.address ? "error" : ""}
+                      placeholder="Street address, apartment, suite, etc."
+                      rows="3"
+                    />
+                    {errors.address && <span className="error-msg">{errors.address}</span>}
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>City *</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      className={errors.city ? "error" : ""}
+                      placeholder="Mumbai"
+                    />
+                    {errors.city && <span className="error-msg">{errors.city}</span>}
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>State *</label>
+                    <input
+                      type="text"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleInputChange}
+                      className={errors.state ? "error" : ""}
+                      placeholder="Maharashtra"
+                    />
+                    {errors.state && <span className="error-msg">{errors.state}</span>}
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Pincode *</label>
+                    <input
+                      type="text"
+                      name="pincode"
+                      value={formData.pincode}
+                      onChange={handleInputChange}
+                      className={errors.pincode ? "error" : ""}
+                      placeholder="400001"
+                      maxLength="6"
+                    />
+                    {errors.pincode && <span className="error-msg">{errors.pincode}</span>}
+                  </div>
+                </div>
+              </section>
+
+              {/* Payment Method */}
+              <section className="form-section">
+                <h2>Payment Method</h2>
+                
+                <div className="payment-methods">
+                  <button
+                    type="button"
+                    className={`payment-method-btn ${paymentMethod === "card" ? "active" : ""}`}
+                    onClick={() => setPaymentMethod("card")}
+                  >
+                    <span className="icon">💳</span>
+                    <span>Credit/Debit Card</span>
+                  </button>
+                  
+                  <button
+                    type="button"
+                    className={`payment-method-btn ${paymentMethod === "upi" ? "active" : ""}`}
+                    onClick={() => setPaymentMethod("upi")}
+                  >
+                    <span className="icon">📱</span>
+                    <span>UPI</span>
+                  </button>
+                  
+                  <button
+                    type="button"
+                    className={`payment-method-btn ${paymentMethod === "netbanking" ? "active" : ""}`}
+                    onClick={() => setPaymentMethod("netbanking")}
+                  >
+                    <span className="icon">🏦</span>
+                    <span>Net Banking</span>
+                  </button>
+                  
+                  <button
+                    type="button"
+                    className={`payment-method-btn ${paymentMethod === "cod" ? "active" : ""}`}
+                    onClick={() => setPaymentMethod("cod")}
+                  >
+                    <span className="icon">💵</span>
+                    <span>Cash on Delivery</span>
+                  </button>
+                </div>
+
+                {/* Card Payment Form */}
+                {paymentMethod === "card" && (
+                  <div className="payment-form-details">
+                    <div className="form-grid">
+                      <div className="form-group full-width">
+                        <label>Card Number *</label>
+                        <input
+                          type="text"
+                          name="cardNumber"
+                          value={formData.cardNumber}
+                          onChange={(e) => {
+                            const formatted = formatCardNumber(e.target.value);
+                            handleInputChange({ target: { name: "cardNumber", value: formatted } });
+                          }}
+                          className={errors.cardNumber ? "error" : ""}
+                          placeholder="1234 5678 9012 3456"
+                          maxLength="19"
+                        />
+                        {errors.cardNumber && <span className="error-msg">{errors.cardNumber}</span>}
+                      </div>
+                      
+                      <div className="form-group full-width">
+                        <label>Cardholder Name *</label>
+                        <input
+                          type="text"
+                          name="cardName"
+                          value={formData.cardName}
+                          onChange={handleInputChange}
+                          className={errors.cardName ? "error" : ""}
+                          placeholder="JOHN DOE"
+                        />
+                        {errors.cardName && <span className="error-msg">{errors.cardName}</span>}
+                      </div>
+                      
+                      <div className="form-group">
+                        <label>Expiry Date *</label>
+                        <input
+                          type="text"
+                          name="expiryDate"
+                          value={formData.expiryDate}
+                          onChange={(e) => {
+                            const formatted = formatExpiryDate(e.target.value);
+                            handleInputChange({ target: { name: "expiryDate", value: formatted } });
+                          }}
+                          className={errors.expiryDate ? "error" : ""}
+                          placeholder="MM/YY"
+                          maxLength="5"
+                        />
+                        {errors.expiryDate && <span className="error-msg">{errors.expiryDate}</span>}
+                      </div>
+                      
+                      <div className="form-group">
+                        <label>CVV *</label>
+                        <input
+                          type="password"
+                          name="cvv"
+                          value={formData.cvv}
+                          onChange={handleInputChange}
+                          className={errors.cvv ? "error" : ""}
+                          placeholder="123"
+                          maxLength="4"
+                        />
+                        {errors.cvv && <span className="error-msg">{errors.cvv}</span>}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* UPI Payment Form */}
+                {paymentMethod === "upi" && (
+                  <div className="payment-form-details">
+                    <div className="form-group">
+                      <label>UPI ID *</label>
+                      <input
+                        type="text"
+                        name="upiId"
+                        value={formData.upiId}
+                        onChange={handleInputChange}
+                        className={errors.upiId ? "error" : ""}
+                        placeholder="username@upi"
+                      />
+                      {errors.upiId && <span className="error-msg">{errors.upiId}</span>}
+                      <p className="payment-help">Enter your UPI ID (Google Pay, PhonePe, Paytm, etc.)</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Net Banking Form */}
+                {paymentMethod === "netbanking" && (
+                  <div className="payment-form-details">
+                    <div className="form-group">
+                      <label>Select Bank *</label>
+                      <select
+                        name="bankName"
+                        value={formData.bankName}
+                        onChange={handleInputChange}
+                        className={errors.bankName ? "error" : ""}
+                      >
+                        <option value="">Choose your bank</option>
+                        <option value="sbi">State Bank of India</option>
+                        <option value="hdfc">HDFC Bank</option>
+                        <option value="icici">ICICI Bank</option>
+                        <option value="axis">Axis Bank</option>
+                        <option value="pnb">Punjab National Bank</option>
+                        <option value="boi">Bank of India</option>
+                        <option value="canara">Canara Bank</option>
+                        <option value="kotak">Kotak Mahindra Bank</option>
+                      </select>
+                      {errors.bankName && <span className="error-msg">{errors.bankName}</span>}
+                    </div>
+                  </div>
+                )}
+
+                {/* COD Message */}
+                {paymentMethod === "cod" && (
+                  <div className="payment-form-details">
+                    <div className="cod-info">
+                      <p>📦 Pay with cash upon delivery</p>
+                      <p className="cod-note">Additional charges may apply for COD orders</p>
+                    </div>
+                  </div>
+                )}
+              </section>
+
+              <button 
+                type="submit" 
+                className="place-order-btn"
+                disabled={isProcessing}
+              >
+                {isProcessing ? (
+                  <>
+                    <span className="spinner"></span>
+                    Processing...
+                  </>
+                ) : (
+                  `Place Order - ₹${totalWithTax.toLocaleString()}`
+                )}
+              </button>
+
+              {submitError && <p className="payment-submit-error">{submitError}</p>}
+
+              <div className="security-badges">
+                <span className="badge">🔒 Secure Payment</span>
+                <span className="badge">✓ 256-bit Encryption</span>
+                <span className="badge">✓ PCI DSS Compliant</span>
+              </div>
+            </form>
+          </div>
+
+          {/* Right Column - Order Summary */}
+          <div className="order-summary-sidebar">
+            <h3>Order Summary</h3>
+            
+            <div className="summary-items">
+              {cartItems.map((item) => (
+                <div key={item.cartId} className="summary-item">
+                  <img src={item.image} alt={item.name} />
+                  <div className="summary-item-details">
+                    <h4>{item.name}</h4>
+                    <p>Qty: {item.quantity}</p>
+                    {item.color && <p className="item-spec">Color: {item.color}</p>}
+                    {item.size && <p className="item-spec">Size: {item.size}</p>}
+                  </div>
+                  <div className="summary-item-price">{item.price}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="summary-totals">
+              <div className="summary-row">
+                <span>Subtotal</span>
+                <span>₹{totalAmount.toLocaleString()}</span>
+              </div>
+              <div className="summary-row">
+                <span>Shipping</span>
+                <span>FREE</span>
+              </div>
+              <div className="summary-row">
+                <span>Tax (GST)</span>
+                <span>₹{taxAmount.toLocaleString()}</span>
+              </div>
+              <div className="summary-divider"></div>
+              <div className="summary-row total">
+                <span>Total</span>
+                <span>₹{totalWithTax.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Payment;
