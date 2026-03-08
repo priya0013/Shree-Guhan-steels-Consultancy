@@ -14,6 +14,9 @@ import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import Cart from "./pages/Cart/Cart";
 import Payment from "./pages/Payment/Payment";
+import AdminEnquiries from "./pages/Admin/AdminEnquiries";
+import AdminOrders from "./pages/Admin/AdminOrders";
+import MyOrders from "./pages/Orders/MyOrders";
 import "./App.css";
 
 function App() {
@@ -33,7 +36,10 @@ function App() {
                 <Route path="/products/windows/:id" element={<WindowDetail />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/cart" element={<Cart />} />
-                                <Route path="/payment" element={<Payment />} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/my-orders" element={<MyOrders />} />
+                <Route path="/admin/enquiries" element={<AdminEnquiries />} />
+                <Route path="/admin/orders" element={<AdminOrders />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
             </Routes>

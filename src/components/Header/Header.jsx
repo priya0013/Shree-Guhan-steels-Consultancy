@@ -15,6 +15,7 @@ function Header() {
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
+  const isAdminUser = (user?.email || "").toLowerCase() === "sales@shreeguhansteels.com";
 
   const cartCount = cart.length;
 
@@ -226,6 +227,31 @@ function Header() {
                     <strong>{user?.name}</strong>
                     <small>{user?.email}</small>
                   </Link>
+                  <Link
+                    to="/my-orders"
+                    onClick={() => setIsAuthDropdownOpen(false)}
+                    className="dropdown-item"
+                  >
+                    My Orders
+                  </Link>
+                  {isAdminUser && (
+                    <>
+                      <Link
+                        to="/admin/orders"
+                        onClick={() => setIsAuthDropdownOpen(false)}
+                        className="dropdown-item"
+                      >
+                        Admin Orders
+                      </Link>
+                      <Link
+                        to="/admin/enquiries"
+                        onClick={() => setIsAuthDropdownOpen(false)}
+                        className="dropdown-item"
+                      >
+                        Admin Enquiries
+                      </Link>
+                    </>
+                  )}
                   <hr />
                   <button 
                     className="dropdown-item logout-btn"

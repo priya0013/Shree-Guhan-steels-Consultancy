@@ -208,6 +208,9 @@ class ApiService {
       return await response.json();
     } catch (error) {
       console.error('Failed to submit enquiry:', error);
+      if (error instanceof TypeError) {
+        throw new Error('Cannot connect to server. Please ensure backend is running on port 5000.');
+      }
       throw error;
     }
   }
@@ -242,6 +245,120 @@ class ApiService {
     }
   }
 
+  // Get orders for logged-in customer
+  async getMyOrders() {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/orders/my`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to fetch my orders:', error);
+      throw error;
+    }
+  }
+
+  // Get all orders for admin
+  async getAdminOrders() {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/orders`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to fetch admin orders:', error);
+      throw error;
+    }
+  }
+
+  // Update order status for admin
+  async updateOrderStatus(orderId, status) {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/orders/${orderId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to update order status:', error);
+      throw error;
+    }
+  }
+
+  // Create quote request
+  async createQuote(quoteData) {
+    try {
+      console.log('Creating quote with data:', quoteData);
+      console.log('API_BASE_URL:', API_BASE_URL);
+      
+      const response = await fetch(`${API_BASE_URL}/quotes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(quoteData)
+      });
+
+      console.log('Quote API response status:', response.status);
+      const payload = await response.json();
+      console.log('Quote API response payload:', payload);
+      
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to create quote:', error);
+      throw error;
+    }
+  }
+
   // Get user enquiries
   async getUserEnquiries(userId) {
     try {
@@ -265,6 +382,63 @@ class ApiService {
       return await response.json();
     } catch (error) {
       console.error('Failed to fetch user enquiries:', error);
+      throw error;
+    }
+  }
+
+  // Get all enquiries for admin
+  async getAdminEnquiries() {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/enquiries`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to fetch admin enquiries:', error);
+      throw error;
+    }
+  }
+
+  // Update enquiry status for admin
+  async updateEnquiryStatus(enquiryId, status) {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/enquiries/${enquiryId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to update enquiry status:', error);
       throw error;
     }
   }
@@ -305,5 +479,11 @@ export const {
   getProductsByCategory,
   getProductById,
   submitEnquiry,
-  createOrder
+  createOrder,
+  createQuote,
+  getMyOrders,
+  getAdminOrders,
+  getAdminEnquiries,
+  updateEnquiryStatus,
+  updateOrderStatus
 } = apiService;

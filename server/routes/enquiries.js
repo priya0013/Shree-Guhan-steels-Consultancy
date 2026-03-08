@@ -1,9 +1,70 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import Enquiry from '../models/Enquiry.js';
-import { protect } from '../middleware/auth.js';
+import nodemailer from 'nodemailer';
+import { protect, requireAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
+
+const createTransporter = () => {
+  const emailUser = process.env.EMAIL_USER || 'your-email@gmail.com';
+  const emailPassword = (process.env.EMAIL_PASSWORD || 'your-app-password').replace(/\s+/g, '');
+
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: false,
+    requireTLS: true,
+    auth: {
+      user: emailUser,
+      pass: emailPassword
+    },
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000
+  });
+};
+
+const sendEnquiryEmail = async (enquiry) => {
+  const transporter = createTransporter();
+  const salesEmail = process.env.SALES_EMAIL || 'sales@shreeguhansteels.com';
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #d97643; color: white; padding: 20px; text-align: center;">
+        <h2 style="margin: 0;">New Contact Enquiry</h2>
+      </div>
+      <div style="background: #f7f7f7; padding: 20px;">
+        <div style="background: #fff; padding: 16px; border-radius: 8px;">
+          <p><strong>Name:</strong> ${enquiry.name}</p>
+          <p><strong>Email:</strong> <a href="mailto:${enquiry.email}">${enquiry.email}</a></p>
+          <p><strong>Phone:</strong> <a href="tel:${enquiry.phone}">${enquiry.phone}</a></p>
+          <p><strong>Enquiry Type:</strong> ${enquiry.enquiryType || 'N/A'}</p>
+          <p><strong>Country:</strong> ${enquiry.country || 'N/A'}</p>
+          <p><strong>State:</strong> ${enquiry.state || 'N/A'}</p>
+          <p><strong>City:</strong> ${enquiry.city || 'N/A'}</p>
+          <p><strong>Visitor Type:</strong> ${enquiry.visitorType || 'N/A'}</p>
+          <p><strong>Consent:</strong> ${enquiry.consent ? 'Yes' : 'No'}</p>
+          <p><strong>Submitted At:</strong> ${new Date(enquiry.createdAt || Date.now()).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  try {
+    await transporter.sendMail({
+      from: `"Shree Guhan Steels - Enquiry" <${process.env.EMAIL_USER}>`,
+      to: salesEmail,
+      subject: `New Enquiry - ${enquiry.enquiryType || 'Contact Form'} - ${enquiry.name}`,
+      html,
+      replyTo: enquiry.email
+    });
+    return true;
+  } catch (error) {
+    console.error('Enquiry email sending failed:', error.message);
+    return false;
+  }
+};
 
 // Create enquiry
 router.post(
@@ -59,10 +120,15 @@ router.post(
 
       await enquiry.save();
 
+      const emailSent = await sendEnquiryEmail(enquiry);
+      enquiry.emailSent = emailSent;
+      await enquiry.save();
+
       res.status(201).json({
         success: true,
         message: 'Enquiry submitted successfully',
-        enquiry
+        enquiry,
+        emailSent
       });
     } catch (error) {
       console.error('Enquiry error:', error);
@@ -75,12 +141,49 @@ router.post(
 );
 
 // Get all enquiries (protected - admin only)
-router.get('/', protect, async (req, res) => {
+router.get('/', protect, requireAdmin, async (req, res) => {
   try {
     const enquiries = await Enquiry.find().sort({ createdAt: -1 });
     res.status(200).json({
       success: true,
       enquiries
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Server error'
+    });
+  }
+});
+
+// Update enquiry status (admin only)
+router.patch('/:id/status', protect, requireAdmin, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const allowed = ['New', 'In Progress', 'Resolved', 'Closed'];
+
+    if (!allowed.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid status value'
+      });
+    }
+
+    const enquiry = await Enquiry.findById(req.params.id);
+    if (!enquiry) {
+      return res.status(404).json({
+        success: false,
+        message: 'Enquiry not found'
+      });
+    }
+
+    enquiry.status = status;
+    await enquiry.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Enquiry status updated successfully',
+      enquiry
     });
   } catch (error) {
     res.status(500).json({

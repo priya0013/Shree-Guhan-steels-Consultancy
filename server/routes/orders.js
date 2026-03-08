@@ -1,7 +1,10 @@
 import crypto from 'crypto';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
+import jwt from 'jsonwebtoken';
 import Order from '../models/Order.js';
+import User from '../models/User.js';
+import { protect, requireAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -110,7 +113,6 @@ router.post(
       if (req.headers.authorization) {
         try {
           const token = req.headers.authorization.split(' ')[1];
-          const jwt = await import('jsonwebtoken');
           const decoded = jwt.verify(token, process.env.JWT_SECRET);
           order.userId = decoded.id;
         } catch (error) {
@@ -141,14 +143,65 @@ router.post(
   }
 );
 
-// Get all orders (for admin dashboards)
-router.get('/', async (req, res) => {
+// Get current user orders
+router.get('/my', protect, async (req, res) => {
   try {
-    const orders = await Order.find().sort({ createdAt: -1 }).limit(100);
+    const user = await User.findById(req.userId).select('email');
+    const userEmail = String(user?.email || '').toLowerCase();
+
+    const orders = await Order.find({
+      $or: [
+        { userId: req.userId },
+        ...(userEmail ? [{ 'customer.email': userEmail }] : [])
+      ]
+    })
+      .sort({ createdAt: -1 })
+      .limit(100);
+
     return res.status(200).json({ success: true, orders });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message || 'Server error' });
   }
 });
+
+// Get all orders (admin only)
+router.get('/', protect, requireAdmin, async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 }).limit(200);
+    return res.status(200).json({ success: true, orders });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message || 'Server error' });
+  }
+});
+
+// Update order status (admin only)
+router.patch(
+  '/:id/status',
+  protect,
+  requireAdmin,
+  [body('status', 'Valid status is required').isIn(['confirmed', 'processing', 'shipped', 'delivered', 'cancelled'])],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success: false, errors: errors.array() });
+    }
+
+    try {
+      const order = await Order.findByIdAndUpdate(
+        req.params.id,
+        { status: req.body.status },
+        { new: true }
+      );
+
+      if (!order) {
+        return res.status(404).json({ success: false, message: 'Order not found' });
+      }
+
+      return res.status(200).json({ success: true, order });
+    } catch (error) {
+      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+    }
+  }
+);
 
 export default router;

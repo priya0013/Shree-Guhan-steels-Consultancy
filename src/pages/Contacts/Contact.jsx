@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import csc from "country-state-city/lib/cjs/index.js";
 import apiService from "../../services/api";
 import "./Contact.css";
+
+const { Country, State, City } = csc;
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -28,45 +31,115 @@ function Contact() {
     "Other"
   ];
 
-  const countries = ["India", "United Arab Emirates", "Saudi Arabia", "United States", "Other"];
-  
-  const states = {
-    India: ["Delhi", "Mumbai", "Bangalore", "Pune", "Chennai", "Kolkata", "Other"],
-    "United Arab Emirates": ["Dubai", "Abu Dhabi", "Sharjah", "Other"],
-    "Saudi Arabia": ["Riyadh", "Jeddah", "Dammam", "Other"],
-    "United States": ["New York", "California", "Texas", "Florida", "Other"],
-    Other: ["N/A"]
-  };
+  const countries = useMemo(() => {
+    try {
+      return Country.getAllCountries().filter((country) => country?.name && country?.isoCode);
+    } catch {
+      return [];
+    }
+  }, []);
 
-  const cities = {
-    Delhi: ["New Delhi", "Delhi NCR", "Gurgaon", "Noida"],
-    Mumbai: ["Mumbai", "Thane", "Navi Mumbai"],
-    Bangalore: ["Bangalore", "Whitefield"],
-    Pune: ["Pune", "Pimpri-Chinchwad"],
-    Chennai: ["Chennai", "Kanchipuram"],
-    Kolkata: ["Kolkata", "Howrah"],
-    Dubai: ["Dubai", "Downtown Dubai"],
-    "Abu Dhabi": ["Abu Dhabi"],
-    Riyadh: ["Riyadh"],
-    "New York": ["New York City"],
-    California: ["Los Angeles", "San Francisco"],
-    Other: ["N/A"]
-  };
+  const selectedCountry = useMemo(
+    () => {
+      if (!formData.country) {
+        return null;
+      }
+      return countries.find((c) => c.name === formData.country) || null;
+    },
+    [countries, formData.country]
+  );
+
+  const availableStates = useMemo(() => {
+    if (!selectedCountry?.isoCode) {
+      return [];
+    }
+
+    try {
+      return State.getStatesOfCountry(selectedCountry.isoCode).filter(
+        (state) => state?.name && state?.isoCode
+      );
+    } catch {
+      return [];
+    }
+  }, [selectedCountry]);
+
+  const selectedState = useMemo(
+    () => availableStates.find((state) => state.name === formData.state),
+    [availableStates, formData.state]
+  );
+
+  const availableCities = useMemo(() => {
+    if (!selectedCountry?.isoCode || !selectedState?.isoCode) {
+      return [];
+    }
+
+    try {
+      return City.getCitiesOfState(selectedCountry.isoCode, selectedState.isoCode).filter(
+        (city) => city?.name
+      );
+    } catch {
+      return [];
+    }
+  }, [selectedCountry, selectedState]);
 
   const visitorTypes = ["Architect", "Contractor", "Designer", "End User", "Retailer", "Other"];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value
-    }));
+
+    setFormData((prev) => {
+      if (type === "checkbox") {
+        return {
+          ...prev,
+          [name]: checked
+        };
+      }
+
+      if (name === "country") {
+        return {
+          ...prev,
+          country: value,
+          state: "",
+          city: ""
+        };
+      }
+
+      if (name === "state") {
+        return {
+          ...prev,
+          state: value,
+          city: ""
+        };
+      }
+
+      return {
+        ...prev,
+        [name]: value
+      };
+    });
 
     // Clear error for this field
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ""
+      }));
+    }
+
+    if (name === "country") {
+      setErrors((prev) => ({
+        ...prev,
+        country: "",
+        state: "",
+        city: ""
+      }));
+    }
+
+    if (name === "state") {
+      setErrors((prev) => ({
+        ...prev,
+        state: "",
+        city: ""
       }));
     }
   };
@@ -96,6 +169,26 @@ function Contact() {
       newErrors.phone = "Phone number is required";
     } else if (!phoneRegex.test(phoneDigits)) {
       newErrors.phone = "Please enter a valid 10-digit phone number";
+    }
+
+    if (!formData.enquiryType) {
+      newErrors.enquiryType = "Type of enquiry is required";
+    }
+
+    if (!formData.country) {
+      newErrors.country = "Country is required";
+    }
+
+    if (!formData.state) {
+      newErrors.state = "State is required";
+    }
+
+    if (!formData.city) {
+      newErrors.city = "City is required";
+    }
+
+    if (!formData.visitorType) {
+      newErrors.visitorType = "Type of visitor is required";
     }
 
     // Consent validation
@@ -234,8 +327,10 @@ function Contact() {
                     className={errors.country ? "error" : ""}
                   >
                     <option value="">---Select Country---</option>
-                    {countries.map(country => (
-                      <option key={country} value={country}>{country}</option>
+                    {countries.map((country) => (
+                      <option key={`${country.isoCode}-${country.name}`} value={country.name}>
+                        {country.name}
+                      </option>
                     ))}
                   </select>
                   {errors.country && <span className="error-message">{errors.country}</span>}
@@ -254,10 +349,17 @@ function Contact() {
                     className={errors.state ? "error" : ""}
                   >
                     <option value="">---Select State---</option>
-                    {formData.country && states[formData.country]?.map(state => (
-                      <option key={state} value={state}>{state}</option>
+                    {availableStates.map((state) => (
+                      <option key={`${state.isoCode}-${state.name}`} value={state.name}>
+                        {state.name}
+                      </option>
                     ))}
                   </select>
+                  {formData.country && availableStates.length === 0 && (
+                    <span style={{color: '#666', fontSize: '0.85rem', marginTop: '4px', display: 'block'}}>
+                      No states available for {formData.country}
+                    </span>
+                  )}
                   {errors.state && <span className="error-message">{errors.state}</span>}
                 </div>
 
@@ -272,8 +374,8 @@ function Contact() {
                     className={errors.city ? "error" : ""}
                   >
                     <option value="">---Select City---</option>
-                    {formData.state && cities[formData.state]?.map(city => (
-                      <option key={city} value={city}>{city}</option>
+                    {availableCities.map((city, index) => (
+                      <option key={`${city.name}-${index}`} value={city.name}>{city.name}</option>
                     ))}
                   </select>
                   {errors.city && <span className="error-message">{errors.city}</span>}

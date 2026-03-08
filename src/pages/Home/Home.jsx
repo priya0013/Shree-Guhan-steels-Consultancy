@@ -68,37 +68,25 @@ function Home() {
   const allSpaces = [
     {
       id: 1,
-      image: "/src/assets/images/random/w2.png",
+      image: "/src/assets/images/doors/d1.jpg",
       title: "Education",
       badge: null
     },
     {
-      id: 2,
-      image: "/src/assets/images/random/w3.png",
-      title: "Retail",
-      badge: { icon: "coffee", text: "Coffee Corner" }
-    },
-    {
       id: 3,
-      image: "/src/assets/images/random/w7.png",
+      image: "/src/assets/images/doors/d8.jpg",
       title: "Hospitality",
       badge: null
     },
     {
       id: 4,
-      image: "/src/assets/images/random/w1.png",
+      image: "/src/assets/images/doors/d2.jpg",
       title: "Residential",
       badge: null
     },
     {
-      id: 5,
-      image: "/src/assets/images/random/w4.png",
-      title: "Commercial",
-      badge: { icon: "star", text: "Premium" }
-    },
-    {
       id: 6,
-      image: "/src/assets/images/random/w5.png",
+      image: "/src/assets/images/doors/d10.jpg",
       title: "Industrial",
       badge: null
     }

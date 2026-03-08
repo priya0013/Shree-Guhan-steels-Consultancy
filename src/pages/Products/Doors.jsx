@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./Doors.css";
 import { doorProducts } from "./doorsData";
+import catalogPdf from "../../assets/models/SGS-Catalog.pdf";
 
 function Doors() {
   const navigate = useNavigate();
@@ -106,7 +107,15 @@ function Doors() {
           <p>Choose from our extensive collection of 33 unique door designs</p>
           <div className="cta-buttons">
             <Link to="/contact" className="btn btn-primary">Get Expert Consultation</Link>
-            <button className="btn btn-secondary">View Catalog PDF</button>
+            <a
+              href={catalogPdf}
+              className="btn btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="SGS-Catalog.pdf"
+            >
+              View Catalog PDF
+            </a>
           </div>
         </div>
       </section>

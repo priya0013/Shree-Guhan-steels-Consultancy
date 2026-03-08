@@ -2,10 +2,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./Windows.css";
 import { windowProducts } from "./windowsData";
+import catalogPdf from "../../assets/models/SGS-Catalog.pdf";
 
 function Windows() {
   const navigate = useNavigate();
   const [likes, setLikes] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categories = ["All", ...new Set(windowProducts.map((product) => product.category))];
+  const filteredProducts =
+    selectedCategory === "All"
+      ? windowProducts
+      : windowProducts.filter((product) => product.category === selectedCategory);
 
   const toggleLike = (productId, event) => {
     event.stopPropagation();
@@ -17,27 +25,21 @@ function Windows() {
 
   return (
     <div className="windows-page">
-      {/* Designer Window Sets Banner - Mikasa Style */}
-      <section className="designer-banner">
-        <div className="corner-line corner-top-left"></div>
-        <div className="corner-line corner-top-right"></div>
-        <div className="corner-line corner-bottom-left"></div>
-        <div className="corner-line corner-bottom-right"></div>
-        
-        <div className="banner-products">
-          {windowProducts.slice(0, 7).map((product, index) => (
-            <div 
-              key={product.id} 
-              className="banner-product-item"
-              onClick={() => navigate(`/products/windows/${product.id}`)}
-            >
-              <img src={product.image} alt={product.name} />
-            </div>
-          ))}
-        </div>
-        
-        <div className="banner-overlay">
-          <h1 className="banner-title">Steel Window Sets</h1>
+      <section className="category-filter-section">
+        <div className="container">
+          <h2>Browse by Category</h2>
+          <div className="category-filters">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`filter-btn ${selectedCategory === category ? "active" : ""}`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          <p className="product-count">Showing {filteredProducts.length} products</p>
         </div>
       </section>
 
@@ -46,7 +48,7 @@ function Windows() {
         <div className="container">
           <h2>Our Steel Window Collection</h2>
           <div className="gallery-grid">
-            {windowProducts.map((product) => (
+            {filteredProducts.map((product) => (
               <div key={product.id} className="gallery-card">
                 <div 
                   className="gallery-image-wrapper"
@@ -57,6 +59,7 @@ function Windows() {
                     alt={product.name}
                     className="gallery-image"
                   />
+                  <div className="product-category-badge">{product.category}</div>
                   <button
                     className={`like-btn ${likes[product.id] ? "liked" : ""}`}
                     onClick={(e) => toggleLike(product.id, e)}
@@ -120,8 +123,16 @@ function Windows() {
           <h2>Ready to Upgrade Your Windows?</h2>
           <p>Get a free consultation from our expert team</p>
           <div className="cta-buttons">
-            <button className="btn btn-primary">Contact Us Today</button>
-            <button className="btn btn-secondary">Download Catalog</button>
+            <Link to="/contact" className="btn btn-primary">Contact Us Today</Link>
+            <a
+              href={catalogPdf}
+              className="btn btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="SGS-Catalog.pdf"
+            >
+              Download Catalog
+            </a>
           </div>
         </div>
       </section>

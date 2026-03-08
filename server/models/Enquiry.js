@@ -43,6 +43,10 @@ const enquirySchema = new mongoose.Schema(
       enum: ['New', 'In Progress', 'Resolved', 'Closed'],
       default: 'New'
     },
+    emailSent: {
+      type: Boolean,
+      default: false
+    },
     createdAt: {
       type: Date,
       default: Date.now

@@ -5,6 +5,78 @@
   background-color: #fafafa;
 }
 
+/* ========== CATEGORY FILTER SECTION ========== */
+.category-filter-section {
+  padding: 60px 20px;
+  background: linear-gradient(to bottom, #ffffff, #f5f5f5);
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.category-filter-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.category-filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.filter-btn {
+  padding: 10px 24px;
+  background: #ffffff;
+  color: var(--primary-dark);
+  border: 2px solid #d0d0d0;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+  background: rgba(217, 118, 67, 0.05);
+}
+
+.filter-btn.active {
+  background: var(--accent-orange);
+  color: #ffffff;
+  border-color: var(--accent-orange);
+  box-shadow: 0 4px 12px rgba(217, 118, 67, 0.3);
+}
+
+.product-count {
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.product-category-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 76, 117, 0.9);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  z-index: 5;
+}
+
 /* ========== DESIGNER BANNER - MIKASA STYLE ========== */
 .designer-banner {
   position: relative;
@@ -278,6 +350,10 @@
 
 .gallery-card:hover .gallery-overlay {
   opacity: 1;
+}
+
+.gallery-image-wrapper:hover .product-category-badge {
+  background: rgba(15, 76, 117, 1);
 }
 
 .view-btn {

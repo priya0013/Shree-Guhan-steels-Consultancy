@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import enquiryRoutes from './routes/enquiries.js';
 import orderRoutes from './routes/orders.js';
+import quoteRoutes from './routes/quotes.js';
 
 // Load environment variables
 dotenv.config();
@@ -32,6 +33,7 @@ mongoose
 app.use('/api/auth', authRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/quotes', quoteRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

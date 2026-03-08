@@ -539,7 +539,7 @@
 .cta-section h2 {
   font-size: 2.8rem;
   margin-bottom: var(--spacing-md);
-  color: var(--white);
+  color: var(--accent-orange);
   font-weight: 800;
   position: relative;
   z-index: 1;
@@ -548,9 +548,20 @@
 .cta-section p {
   font-size: 1.2rem;
   margin-bottom: var(--spacing-lg);
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--accent-orange);
   position: relative;
   z-index: 1;
+}
+
+.cta-section .btn-primary {
+  background-color: var(--accent-orange);
+  color: var(--white);
+}
+
+.cta-section .btn-primary:hover {
+  background-color: #c4642e;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
 }
 
 /* ========== RESPONSIVE DESIGN ========== */
