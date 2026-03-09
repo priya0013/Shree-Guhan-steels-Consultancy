@@ -47,15 +47,15 @@ function Footer() {
           <ul className="footer-contact">
             <li>
               <h5>Address</h5>
-              123 Industrial Area, City - 123456
+              SHREE GUHAN STEELS, ErodeMain Road, Vellalapalayam
             </li>
             <li>
               <h5>Phone</h5>
-              <a href="tel:+911234567890">+91 12345 67890</a>
+              <a href="tel:+919841721818">+91 9841721818</a>
             </li>
             <li>
               <h5>Email</h5>
-              <a href="mailto:info@shreeguhansteels.com">info@shreeguhansteels.com</a>
+              <a href="mailto:shreeguhansteels@gmail.com">shreeguhansteels@gmail.com</a>
             </li>
           </ul>
         </div>
