@@ -13,7 +13,7 @@
   min-height: 600px;
   background: 
     linear-gradient(135deg, rgba(232, 232, 232, 0.85) 0%, rgba(212, 212, 212, 0.85) 100%),
-    url('/src/assets/images/doors/d1.jpg');
+    url('/assets/images/doors/d1.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

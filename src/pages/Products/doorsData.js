@@ -1,7 +1,7 @@
 export const doorProducts = [
   {
     id: 1,
-    image: "/src/assets/images/doors/d1.jpg",
+    image: "/assets/images/doors/d1.jpg",
     name: "Signature Steel Security Door",
     model: "DG-701",
     description: "Premium entry door with multi-point locking and thermal insulation",
@@ -19,11 +19,11 @@ export const doorProducts = [
       fireRating: "Optional 60/90 min"
     },
     gallery: [
-      "/src/assets/images/doors/d1.jpg",
-      "/src/assets/images/doors/d2.jpg",
-      "/src/assets/images/doors/d3.jpg",
-      "/src/assets/images/doors/d4.jpg",
-      "/src/assets/images/doors/d5.jpg"
+      "/assets/images/doors/d1.jpg",
+      "/assets/images/doors/d2.jpg",
+      "/assets/images/doors/d3.jpg",
+      "/assets/images/doors/d4.jpg",
+      "/assets/images/doors/d5.jpg"
     ],
     features: [
       "Multi-point locking system",
@@ -35,7 +35,7 @@ export const doorProducts = [
   },
   {
     id: 2,
-    image: "/src/assets/images/doors/d2.jpg",
+    image: "/assets/images/doors/d2.jpg",
     name: "Modern Gloss Black Door",
     model: "DG-702",
     description: "Sleek modern door with premium gloss black finish",
@@ -53,11 +53,11 @@ export const doorProducts = [
       fireRating: "30 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d2.jpg",
-      "/src/assets/images/doors/d3.jpg",
-      "/src/assets/images/doors/d4.jpg",
-      "/src/assets/images/doors/d5.jpg",
-      "/src/assets/images/doors/d6.jpg"
+      "/assets/images/doors/d2.jpg",
+      "/assets/images/doors/d3.jpg",
+      "/assets/images/doors/d4.jpg",
+      "/assets/images/doors/d5.jpg",
+      "/assets/images/doors/d6.jpg"
     ],
     features: [
       "Decorative panel design",
@@ -69,7 +69,7 @@ export const doorProducts = [
   },
   {
     id: 3,
-    image: "/src/assets/images/doors/d3.jpg",
+    image: "/assets/images/doors/d3.jpg",
     name: "Luxury Matte Black Door",
     model: "DG-703",
     description: "Premium matte black finish with contemporary styling",
@@ -87,11 +87,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d3.jpg",
-      "/src/assets/images/doors/d4.jpg",
-      "/src/assets/images/doors/d5.jpg",
-      "/src/assets/images/doors/d6.jpg",
-      "/src/assets/images/doors/d7.jpg"
+      "/assets/images/doors/d3.jpg",
+      "/assets/images/doors/d4.jpg",
+      "/assets/images/doors/d5.jpg",
+      "/assets/images/doors/d6.jpg",
+      "/assets/images/doors/d7.jpg"
     ],
     features: [
       "Matte black finish (no fingerprints)",
@@ -103,7 +103,7 @@ export const doorProducts = [
   },
   {
     id: 4,
-    image: "/src/assets/images/doors/d4.jpg",
+    image: "/assets/images/doors/d4.jpg",
     name: "Elegant Glass Panel Door",
     model: "DG-704",
     description: "Modern door with safety glass panels for light and elegance",
@@ -121,11 +121,11 @@ export const doorProducts = [
       fireRating: "45 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d4.jpg",
-      "/src/assets/images/doors/d5.jpg",
-      "/src/assets/images/doors/d6.jpg",
-      "/src/assets/images/doors/d7.jpg",
-      "/src/assets/images/doors/d8.jpg"
+      "/assets/images/doors/d4.jpg",
+      "/assets/images/doors/d5.jpg",
+      "/assets/images/doors/d6.jpg",
+      "/assets/images/doors/d7.jpg",
+      "/assets/images/doors/d8.jpg"
     ],
     features: [
       "Tempered safety glass panels",
@@ -137,7 +137,7 @@ export const doorProducts = [
   },
   {
     id: 5,
-    image: "/src/assets/images/doors/d5.jpg",
+    image: "/assets/images/doors/d5.jpg",
     name: "Industrial Steel Portal",
     model: "DG-705",
     description: "Heavy-duty industrial door for commercial and warehouse use",
@@ -155,11 +155,11 @@ export const doorProducts = [
       fireRating: "120 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d5.jpg",
-      "/src/assets/images/doors/d6.jpg",
-      "/src/assets/images/doors/d7.jpg",
-      "/src/assets/images/doors/d8.jpg",
-      "/src/assets/images/doors/d9.jpg"
+      "/assets/images/doors/d5.jpg",
+      "/assets/images/doors/d6.jpg",
+      "/assets/images/doors/d7.jpg",
+      "/assets/images/doors/d8.jpg",
+      "/assets/images/doors/d9.jpg"
     ],
     features: [
       "Heavy-duty construction for high traffic",
@@ -171,7 +171,7 @@ export const doorProducts = [
   },
   {
     id: 6,
-    image: "/src/assets/images/doors/d6.jpg",
+    image: "/assets/images/doors/d6.jpg",
     name: "Classic Charcoal Door",
     model: "DG-706",
     description: "Timeless charcoal finish with traditional styling",
@@ -189,11 +189,11 @@ export const doorProducts = [
       fireRating: "30 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d6.jpg",
-      "/src/assets/images/doors/d7.jpg",
-      "/src/assets/images/doors/d8.jpg",
-      "/src/assets/images/doors/d9.jpg",
-      "/src/assets/images/doors/d10.jpg"
+      "/assets/images/doors/d6.jpg",
+      "/assets/images/doors/d7.jpg",
+      "/assets/images/doors/d8.jpg",
+      "/assets/images/doors/d9.jpg",
+      "/assets/images/doors/d10.jpg"
     ],
     features: [
       "Traditional panel design",
@@ -205,7 +205,7 @@ export const doorProducts = [
   },
   {
     id: 7,
-    image: "/src/assets/images/doors/d7.jpg",
+    image: "/assets/images/doors/d7.jpg",
     name: "Silver Metallic Door",
     model: "DG-707",
     description: "Modern silver metallic finish with sleek design",
@@ -223,11 +223,11 @@ export const doorProducts = [
       fireRating: "45 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d7.jpg",
-      "/src/assets/images/doors/d8.jpg",
-      "/src/assets/images/doors/d9.jpg",
-      "/src/assets/images/doors/d10.jpg",
-      "/src/assets/images/doors/d11.jpg"
+      "/assets/images/doors/d7.jpg",
+      "/assets/images/doors/d8.jpg",
+      "/assets/images/doors/d9.jpg",
+      "/assets/images/doors/d10.jpg",
+      "/assets/images/doors/d11.jpg"
     ],
     features: [
       "Contemporary silver metallic finish",
@@ -239,7 +239,7 @@ export const doorProducts = [
   },
   {
     id: 8,
-    image: "/src/assets/images/doors/d8.jpg",
+    image: "/assets/images/doors/d8.jpg",
     name: "Midnight Blue Steel Door",
     model: "DG-708",
     description: "Unique blue-tinted steel door for distinctive interiors",
@@ -257,11 +257,11 @@ export const doorProducts = [
       fireRating: "30 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d8.jpg",
-      "/src/assets/images/doors/d9.jpg",
-      "/src/assets/images/doors/d10.jpg",
-      "/src/assets/images/doors/d11.jpg",
-      "/src/assets/images/doors/d12.jpg"
+      "/assets/images/doors/d8.jpg",
+      "/assets/images/doors/d9.jpg",
+      "/assets/images/doors/d10.jpg",
+      "/assets/images/doors/d11.jpg",
+      "/assets/images/doors/d12.jpg"
     ],
     features: [
       "Custom blue color coating",
@@ -273,7 +273,7 @@ export const doorProducts = [
   },
   {
     id: 9,
-    image: "/src/assets/images/doors/d9.jpg",
+    image: "/assets/images/doors/d9.jpg",
     name: "Executive Bronze Door",
     model: "DG-709",
     description: "Executive bronze finish for upscale residential and commercial spaces",
@@ -291,11 +291,11 @@ export const doorProducts = [
       fireRating: "45 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d9.jpg",
-      "/src/assets/images/doors/d10.jpg",
-      "/src/assets/images/doors/d11.jpg",
-      "/src/assets/images/doors/d12.jpg",
-      "/src/assets/images/doors/d13.jpg"
+      "/assets/images/doors/d9.jpg",
+      "/assets/images/doors/d10.jpg",
+      "/assets/images/doors/d11.jpg",
+      "/assets/images/doors/d12.jpg",
+      "/assets/images/doors/d13.jpg"
     ],
     features: [
       "Executive bronze finish",
@@ -307,7 +307,7 @@ export const doorProducts = [
   },
   {
     id: 10,
-    image: "/src/assets/images/doors/d10.jpg",
+    image: "/assets/images/doors/d10.jpg",
     name: "Innovation Smart Door",
     model: "DG-710",
     description: "Smart-compatible door with integrated smart lock readiness",
@@ -325,11 +325,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d10.jpg",
-      "/src/assets/images/doors/d11.jpg",
-      "/src/assets/images/doors/d12.jpg",
-      "/src/assets/images/doors/d13.jpg",
-      "/src/assets/images/doors/d14.jpg"
+      "/assets/images/doors/d10.jpg",
+      "/assets/images/doors/d11.jpg",
+      "/assets/images/doors/d12.jpg",
+      "/assets/images/doors/d13.jpg",
+      "/assets/images/doors/d14.jpg"
     ],
     features: [
       "Pre-wired for smart locks",
@@ -341,7 +341,7 @@ export const doorProducts = [
   },
   {
     id: 11,
-    image: "/src/assets/images/doors/d11.jpg",
+    image: "/assets/images/doors/d11.jpg",
     name: "Thermal Insulated Series",
     model: "DG-711",
     description: "Maximum insulation for energy efficiency and noise reduction",
@@ -359,11 +359,11 @@ export const doorProducts = [
       fireRating: "90 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d11.jpg",
-      "/src/assets/images/doors/d12.jpg",
-      "/src/assets/images/doors/d13.jpg",
-      "/src/assets/images/doors/d14.jpg",
-      "/src/assets/images/doors/d15.jpg"
+      "/assets/images/doors/d11.jpg",
+      "/assets/images/doors/d12.jpg",
+      "/assets/images/doors/d13.jpg",
+      "/assets/images/doors/d14.jpg",
+      "/assets/images/doors/d15.jpg"
     ],
     features: [
       "Triple thermal insulation layer",
@@ -375,7 +375,7 @@ export const doorProducts = [
   },
   {
     id: 12,
-    image: "/src/assets/images/doors/d12.jpg",
+    image: "/assets/images/doors/d12.jpg",
     name: "Commercial Heavy Duty",
     model: "DG-712",
     description: "Built for high-traffic commercial environments",
@@ -393,11 +393,11 @@ export const doorProducts = [
       fireRating: "120 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d12.jpg",
-      "/src/assets/images/doors/d13.jpg",
-      "/src/assets/images/doors/d14.jpg",
-      "/src/assets/images/doors/d15.jpg",
-      "/src/assets/images/doors/d16.jpg"
+      "/assets/images/doors/d12.jpg",
+      "/assets/images/doors/d13.jpg",
+      "/assets/images/doors/d14.jpg",
+      "/assets/images/doors/d15.jpg",
+      "/assets/images/doors/d16.jpg"
     ],
     features: [
       "Heavy-duty construction",
@@ -409,7 +409,7 @@ export const doorProducts = [
   },
   {
     id: 13,
-    image: "/src/assets/images/doors/d13.jpg",
+    image: "/assets/images/doors/d13.jpg",
     name: "Minimalist Flat Door",
     model: "DG-713",
     description: "Clean minimalist design with flat panel styling",
@@ -427,11 +427,11 @@ export const doorProducts = [
       fireRating: "15 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d13.jpg",
-      "/src/assets/images/doors/d14.jpg",
-      "/src/assets/images/doors/d15.jpg",
-      "/src/assets/images/doors/d16.jpg",
-      "/src/assets/images/doors/d17.jpg"
+      "/assets/images/doors/d13.jpg",
+      "/assets/images/doors/d14.jpg",
+      "/assets/images/doors/d15.jpg",
+      "/assets/images/doors/d16.jpg",
+      "/assets/images/doors/d17.jpg"
     ],
     features: [
       "Flat panel minimalist design",
@@ -443,7 +443,7 @@ export const doorProducts = [
   },
   {
     id: 14,
-    image: "/src/assets/images/doors/d14.jpg",
+    image: "/assets/images/doors/d14.jpg",
     name: "Vintage Textured Door",
     model: "DG-714",
     description: "Textured surface design for vintage and classic interiors",
@@ -461,11 +461,11 @@ export const doorProducts = [
       fireRating: "30 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d14.jpg",
-      "/src/assets/images/doors/d15.jpg",
-      "/src/assets/images/doors/d16.jpg",
-      "/src/assets/images/doors/d17.jpg",
-      "/src/assets/images/doors/d18.jpg"
+      "/assets/images/doors/d14.jpg",
+      "/assets/images/doors/d15.jpg",
+      "/assets/images/doors/d16.jpg",
+      "/assets/images/doors/d17.jpg",
+      "/assets/images/doors/d18.jpg"
     ],
     features: [
       "Unique textured surface",
@@ -477,7 +477,7 @@ export const doorProducts = [
   },
   {
     id: 15,
-    image: "/src/assets/images/doors/d15.jpg",
+    image: "/assets/images/doors/d15.jpg",
     name: "Diamond Plate Designer",
     model: "DG-715",
     description: "Diamond plate design for modern industrial interiors",
@@ -495,11 +495,11 @@ export const doorProducts = [
       fireRating: "45 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d15.jpg",
-      "/src/assets/images/doors/d16.jpg",
-      "/src/assets/images/doors/d17.jpg",
-      "/src/assets/images/doors/d18.jpg",
-      "/src/assets/images/doors/d19.jpg"
+      "/assets/images/doors/d15.jpg",
+      "/assets/images/doors/d16.jpg",
+      "/assets/images/doors/d17.jpg",
+      "/assets/images/doors/d18.jpg",
+      "/assets/images/doors/d19.jpg"
     ],
     features: [
       "Diamond plate pattern design",
@@ -511,7 +511,7 @@ export const doorProducts = [
   },
   {
     id: 16,
-    image: "/src/assets/images/doors/d16.jpg",
+    image: "/assets/images/doors/d16.jpg",
     name: "Granite Look Door",
     model: "DG-716",
     description: "Granite texture finish for sophisticated styling",
@@ -529,11 +529,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d16.jpg",
-      "/src/assets/images/doors/d17.jpg",
-      "/src/assets/images/doors/d18.jpg",
-      "/src/assets/images/doors/d19.jpg",
-      "/src/assets/images/doors/d20.jpg"
+      "/assets/images/doors/d16.jpg",
+      "/assets/images/doors/d17.jpg",
+      "/assets/images/doors/d18.jpg",
+      "/assets/images/doors/d19.jpg",
+      "/assets/images/doors/d20.jpg"
     ],
     features: [
       "Granite texture appearance",
@@ -545,7 +545,7 @@ export const doorProducts = [
   },
   {
     id: 17,
-    image: "/src/assets/images/doors/d17.jpg",
+    image: "/assets/images/doors/d17.jpg",
     name: "Linear Groove Door",
     model: "DG-717",
     description: "Contemporary linear groove pattern for modern spaces",
@@ -563,11 +563,11 @@ export const doorProducts = [
       fireRating: "45 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d17.jpg",
-      "/src/assets/images/doors/d18.jpg",
-      "/src/assets/images/doors/d19.jpg",
-      "/src/assets/images/doors/d20.jpg",
-      "/src/assets/images/doors/d21.jpg"
+      "/assets/images/doors/d17.jpg",
+      "/assets/images/doors/d18.jpg",
+      "/assets/images/doors/d19.jpg",
+      "/assets/images/doors/d20.jpg",
+      "/assets/images/doors/d21.jpg"
     ],
     features: [
       "Linear groove pattern",
@@ -579,7 +579,7 @@ export const doorProducts = [
   },
   {
     id: 18,
-    image: "/src/assets/images/doors/d18.jpg",
+    image: "/assets/images/doors/d18.jpg",
     name: "Shadowline Detail Door",
     model: "DG-718",
     description: "Subtle shadowline detail adds depth and elegance",
@@ -597,11 +597,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d18.jpg",
-      "/src/assets/images/doors/d19.jpg",
-      "/src/assets/images/doors/d20.jpg",
-      "/src/assets/images/doors/d21.jpg",
-      "/src/assets/images/doors/d22.jpg"
+      "/assets/images/doors/d18.jpg",
+      "/assets/images/doors/d19.jpg",
+      "/assets/images/doors/d20.jpg",
+      "/assets/images/doors/d21.jpg",
+      "/assets/images/doors/d22.jpg"
     ],
     features: [
       "Shadowline edge detail",
@@ -613,7 +613,7 @@ export const doorProducts = [
   },
   {
     id: 19,
-    image: "/src/assets/images/doors/d19.jpg",
+    image: "/assets/images/doors/d19.jpg",
     name: "Vertical Line Door",
     model: "DG-719",
     description: "Vertical line design for tall and elegant spaces",
@@ -631,11 +631,11 @@ export const doorProducts = [
       fireRating: "30 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d19.jpg",
-      "/src/assets/images/doors/d20.jpg",
-      "/src/assets/images/doors/d21.jpg",
-      "/src/assets/images/doors/d22.jpg",
-      "/src/assets/images/doors/d23.jpg"
+      "/assets/images/doors/d19.jpg",
+      "/assets/images/doors/d20.jpg",
+      "/assets/images/doors/d21.jpg",
+      "/assets/images/doors/d22.jpg",
+      "/assets/images/doors/d23.jpg"
     ],
     features: [
       "Vertical line pattern",
@@ -647,7 +647,7 @@ export const doorProducts = [
   },
   {
     id: 20,
-    image: "/src/assets/images/doors/d20.jpg",
+    image: "/assets/images/doors/d20.jpg",
     name: "Stainless Steel Premium",
     model: "DG-720",
     description: "High-end stainless steel door for luxury spaces",
@@ -665,11 +665,11 @@ export const doorProducts = [
       fireRating: "90 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d20.jpg",
-      "/src/assets/images/doors/d21.jpg",
-      "/src/assets/images/doors/d22.jpg",
-      "/src/assets/images/doors/d23.jpg",
-      "/src/assets/images/doors/d24.jpg"
+      "/assets/images/doors/d20.jpg",
+      "/assets/images/doors/d21.jpg",
+      "/assets/images/doors/d22.jpg",
+      "/assets/images/doors/d23.jpg",
+      "/assets/images/doors/d24.jpg"
     ],
     features: [
       "Premium stainless steel",
@@ -681,7 +681,7 @@ export const doorProducts = [
   },
   {
     id: 21,
-    image: "/src/assets/images/doors/d21.jpg",
+    image: "/assets/images/doors/d21.jpg",
     name: "Fire-Rated Security",
     model: "DG-721",
     description: "Fire-resistant door with enhanced security features",
@@ -699,11 +699,11 @@ export const doorProducts = [
       fireRating: "120 min certified"
     },
     gallery: [
-      "/src/assets/images/doors/d21.jpg",
-      "/src/assets/images/doors/d22.jpg",
-      "/src/assets/images/doors/d23.jpg",
-      "/src/assets/images/doors/d24.jpg",
-      "/src/assets/images/doors/d25.jpg"
+      "/assets/images/doors/d21.jpg",
+      "/assets/images/doors/d22.jpg",
+      "/assets/images/doors/d23.jpg",
+      "/assets/images/doors/d24.jpg",
+      "/assets/images/doors/d25.jpg"
     ],
     features: [
       "Fire-resistant rating",
@@ -715,7 +715,7 @@ export const doorProducts = [
   },
   {
     id: 22,
-    image: "/src/assets/images/doors/d22.jpg",
+    image: "/assets/images/doors/d22.jpg",
     name: "Soundproof Studio Door",
     model: "DG-722",
     description: "Advanced sound dampening technology for studios and offices",
@@ -733,11 +733,11 @@ export const doorProducts = [
       fireRating: "90 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d22.jpg",
-      "/src/assets/images/doors/d23.jpg",
-      "/src/assets/images/doors/d24.jpg",
-      "/src/assets/images/doors/d25.jpg",
-      "/src/assets/images/doors/d26.jpg"
+      "/assets/images/doors/d22.jpg",
+      "/assets/images/doors/d23.jpg",
+      "/assets/images/doors/d24.jpg",
+      "/assets/images/doors/d25.jpg",
+      "/assets/images/doors/d26.jpg"
     ],
     features: [
       "Advanced sound insulation",
@@ -749,7 +749,7 @@ export const doorProducts = [
   },
   {
     id: 23,
-    image: "/src/assets/images/doors/d23.jpg",
+    image: "/assets/images/doors/d23.jpg",
     name: "Eco-Green Door",
     model: "DG-723",
     description: "Environmentally friendly sustainable door option",
@@ -767,11 +767,11 @@ export const doorProducts = [
       fireRating: "30 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d23.jpg",
-      "/src/assets/images/doors/d24.jpg",
-      "/src/assets/images/doors/d25.jpg",
-      "/src/assets/images/doors/d26.jpg",
-      "/src/assets/images/doors/d27.jpg"
+      "/assets/images/doors/d23.jpg",
+      "/assets/images/doors/d24.jpg",
+      "/assets/images/doors/d25.jpg",
+      "/assets/images/doors/d26.jpg",
+      "/assets/images/doors/d27.jpg"
     ],
     features: [
       "100% recyclable material",
@@ -783,7 +783,7 @@ export const doorProducts = [
   },
   {
     id: 24,
-    image: "/src/assets/images/doors/d24.jpg",
+    image: "/assets/images/doors/d24.jpg",
     name: "Rose Gold Elegant",
     model: "DG-724",
     description: "Trendy rose gold finish for modern luxury homes",
@@ -801,11 +801,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d24.jpg",
-      "/src/assets/images/doors/d25.jpg",
-      "/src/assets/images/doors/d26.jpg",
-      "/src/assets/images/doors/d27.jpg",
-      "/src/assets/images/doors/d28.jpg"
+      "/assets/images/doors/d24.jpg",
+      "/assets/images/doors/d25.jpg",
+      "/assets/images/doors/d26.jpg",
+      "/assets/images/doors/d27.jpg",
+      "/assets/images/doors/d28.jpg"
     ],
     features: [
       "Trendy rose gold finish",
@@ -817,7 +817,7 @@ export const doorProducts = [
   },
   {
     id: 25,
-    image: "/src/assets/images/doors/d25.jpg",
+    image: "/assets/images/doors/d25.jpg",
     name: "Copper Metallic Door",
     model: "DG-725",
     description: "Distinctive copper metallic finish for unique spaces",
@@ -835,11 +835,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d25.jpg",
-      "/src/assets/images/doors/d26.jpg",
-      "/src/assets/images/doors/d27.jpg",
-      "/src/assets/images/doors/d28.jpg",
-      "/src/assets/images/doors/d29.jpg"
+      "/assets/images/doors/d25.jpg",
+      "/assets/images/doors/d26.jpg",
+      "/assets/images/doors/d27.jpg",
+      "/assets/images/doors/d28.jpg",
+      "/assets/images/doors/d29.jpg"
     ],
     features: [
       "Distinctive copper metallic",
@@ -851,7 +851,7 @@ export const doorProducts = [
   },
   {
     id: 26,
-    image: "/src/assets/images/doors/d26.jpg",
+    image: "/assets/images/doors/d26.jpg",
     name: "Contemporary Matte Grey",
     model: "DG-726",
     description: "Sophisticated matte grey for contemporary homes",
@@ -869,11 +869,11 @@ export const doorProducts = [
       fireRating: "30 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d26.jpg",
-      "/src/assets/images/doors/d27.jpg",
-      "/src/assets/images/doors/d28.jpg",
-      "/src/assets/images/doors/d29.jpg",
-      "/src/assets/images/doors/d30.jpg"
+      "/assets/images/doors/d26.jpg",
+      "/assets/images/doors/d27.jpg",
+      "/assets/images/doors/d28.jpg",
+      "/assets/images/doors/d29.jpg",
+      "/assets/images/doors/d30.jpg"
     ],
     features: [
       "Matte grey finish",
@@ -885,7 +885,7 @@ export const doorProducts = [
   },
   {
     id: 27,
-    image: "/src/assets/images/doors/d27.jpg",
+    image: "/assets/images/doors/d27.jpg",
     name: "Geometric Pattern Door",
     model: "DG-727",
     description: "Modern geometric pattern design for artistic spaces",
@@ -903,11 +903,11 @@ export const doorProducts = [
       fireRating: "45 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d27.jpg",
-      "/src/assets/images/doors/d28.jpg",
-      "/src/assets/images/doors/d29.jpg",
-      "/src/assets/images/doors/d30.jpg",
-      "/src/assets/images/doors/d31.jpg"
+      "/assets/images/doors/d27.jpg",
+      "/assets/images/doors/d28.jpg",
+      "/assets/images/doors/d29.jpg",
+      "/assets/images/doors/d30.jpg",
+      "/assets/images/doors/d31.jpg"
     ],
     features: [
       "Modern geometric pattern",
@@ -919,7 +919,7 @@ export const doorProducts = [
   },
   {
     id: 28,
-    image: "/src/assets/images/doors/d28.jpg",
+    image: "/assets/images/doors/d28.jpg",
     name: "Wave Texture Door",
     model: "DG-728",
     description: "Flowing wave texture pattern for modern elegance",
@@ -937,11 +937,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d28.jpg",
-      "/src/assets/images/doors/d29.jpg",
-      "/src/assets/images/doors/d30.jpg",
-      "/src/assets/images/doors/d31.jpg",
-      "/src/assets/images/doors/d32.jpg"
+      "/assets/images/doors/d28.jpg",
+      "/assets/images/doors/d29.jpg",
+      "/assets/images/doors/d30.jpg",
+      "/assets/images/doors/d31.jpg",
+      "/assets/images/doors/d32.jpg"
     ],
     features: [
       "Flowing wave texture",
@@ -953,7 +953,7 @@ export const doorProducts = [
   },
   {
     id: 29,
-    image: "/src/assets/images/doors/d29.jpg",
+    image: "/assets/images/doors/d29.jpg",
     name: "Hexagon Pattern Door",
     model: "DG-729",
     description: "Modern hexagon pattern for contemporary design lovers",
@@ -971,11 +971,11 @@ export const doorProducts = [
       fireRating: "45 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d29.jpg",
-      "/src/assets/images/doors/d30.jpg",
-      "/src/assets/images/doors/d31.jpg",
-      "/src/assets/images/doors/d32.jpg",
-      "/src/assets/images/doors/d33.jpg"
+      "/assets/images/doors/d29.jpg",
+      "/assets/images/doors/d30.jpg",
+      "/assets/images/doors/d31.jpg",
+      "/assets/images/doors/d32.jpg",
+      "/assets/images/doors/d33.jpg"
     ],
     features: [
       "Hexagon geometric pattern",
@@ -987,7 +987,7 @@ export const doorProducts = [
   },
   {
     id: 30,
-    image: "/src/assets/images/doors/d30.jpg",
+    image: "/assets/images/doors/d30.jpg",
     name: "Embossed Detail Door",
     model: "DG-730",
     description: "Subtle embossed details for sophisticated interiors",
@@ -1005,11 +1005,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d30.jpg",
-      "/src/assets/images/doors/d31.jpg",
-      "/src/assets/images/doors/d32.jpg",
-      "/src/assets/images/doors/d33.jpg",
-      "/src/assets/images/doors/d1.jpg"
+      "/assets/images/doors/d30.jpg",
+      "/assets/images/doors/d31.jpg",
+      "/assets/images/doors/d32.jpg",
+      "/assets/images/doors/d33.jpg",
+      "/assets/images/doors/d1.jpg"
     ],
     features: [
       "Subtle embossed details",
@@ -1021,7 +1021,7 @@ export const doorProducts = [
   },
   {
     id: 31,
-    image: "/src/assets/images/doors/d31.jpg",
+    image: "/assets/images/doors/d31.jpg",
     name: "Ultra-Modern Black",
     model: "DG-731",
     description: "Sleek ultra-modern black design for contemporary spaces",
@@ -1039,11 +1039,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d31.jpg",
-      "/src/assets/images/doors/d32.jpg",
-      "/src/assets/images/doors/d33.jpg",
-      "/src/assets/images/doors/d1.jpg",
-      "/src/assets/images/doors/d2.jpg"
+      "/assets/images/doors/d31.jpg",
+      "/assets/images/doors/d32.jpg",
+      "/assets/images/doors/d33.jpg",
+      "/assets/images/doors/d1.jpg",
+      "/assets/images/doors/d2.jpg"
     ],
     features: [
       "Ultra-modern design",
@@ -1055,7 +1055,7 @@ export const doorProducts = [
   },
   {
     id: 32,
-    image: "/src/assets/images/doors/d32.jpg",
+    image: "/assets/images/doors/d32.jpg",
     name: "Champagne Gloss Door",
     model: "DG-732",
     description: "Luxurious champagne gloss finish for elegant spaces",
@@ -1073,11 +1073,11 @@ export const doorProducts = [
       fireRating: "60 min optional"
     },
     gallery: [
-      "/src/assets/images/doors/d32.jpg",
-      "/src/assets/images/doors/d33.jpg",
-      "/src/assets/images/doors/d1.jpg",
-      "/src/assets/images/doors/d2.jpg",
-      "/src/assets/images/doors/d3.jpg"
+      "/assets/images/doors/d32.jpg",
+      "/assets/images/doors/d33.jpg",
+      "/assets/images/doors/d1.jpg",
+      "/assets/images/doors/d2.jpg",
+      "/assets/images/doors/d3.jpg"
     ],
     features: [
       "Luxurious champagne gloss",
@@ -1089,7 +1089,7 @@ export const doorProducts = [
   },
   {
     id: 33,
-    image: "/src/assets/images/doors/d33.jpg",
+    image: "/assets/images/doors/d33.jpg",
     name: "Ultimate Security Pro",
     model: "DG-733",
     description: "Ultimate security door with advanced locking and reinforced steel",
@@ -1107,11 +1107,11 @@ export const doorProducts = [
       fireRating: "120 min certified"
     },
     gallery: [
-      "/src/assets/images/doors/d33.jpg",
-      "/src/assets/images/doors/d1.jpg",
-      "/src/assets/images/doors/d2.jpg",
-      "/src/assets/images/doors/d3.jpg",
-      "/src/assets/images/doors/d4.jpg"
+      "/assets/images/doors/d33.jpg",
+      "/assets/images/doors/d1.jpg",
+      "/assets/images/doors/d2.jpg",
+      "/assets/images/doors/d3.jpg",
+      "/assets/images/doors/d4.jpg"
     ],
     features: [
       "Military-grade steel construction",
@@ -1122,3 +1122,4 @@ export const doorProducts = [
     ]
   }
 ];
+

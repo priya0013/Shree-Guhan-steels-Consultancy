@@ -68,25 +68,25 @@ function Home() {
   const allSpaces = [
     {
       id: 1,
-      image: "/src/assets/images/doors/d1.jpg",
+      image: "/assets/images/doors/d1.jpg",
       title: "Education",
       badge: null
     },
     {
       id: 3,
-      image: "/src/assets/images/doors/d8.jpg",
+      image: "/assets/images/doors/d8.jpg",
       title: "Hospitality",
       badge: null
     },
     {
       id: 4,
-      image: "/src/assets/images/doors/d2.jpg",
+      image: "/assets/images/doors/d2.jpg",
       title: "Residential",
       badge: null
     },
     {
       id: 6,
-      image: "/src/assets/images/doors/d10.jpg",
+      image: "/assets/images/doors/d10.jpg",
       title: "Industrial",
       badge: null
     }

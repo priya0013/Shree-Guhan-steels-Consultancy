@@ -1,7 +1,7 @@
 export const windowProducts = [
   {
     id: 1,
-    image: "/src/assets/images/random/w1.png",
+    image: "/assets/images/random/w1.png",
     name: "Modern Sliding Windows",
     category: "Sliding Windows",
     description: "Contemporary sliding window system with superior insulation",
@@ -16,16 +16,16 @@ export const windowProducts = [
       "Available in custom sizes"
     ],
     gallery: [
-      "/src/assets/images/random/w1.png",
-      "/src/assets/images/random/w2.png",
-      "/src/assets/images/random/w3.png",
-      "/src/assets/images/random/w4.png",
-      "/src/assets/images/random/w5.png"
+      "/assets/images/random/w1.png",
+      "/assets/images/random/w2.png",
+      "/assets/images/random/w3.png",
+      "/assets/images/random/w4.png",
+      "/assets/images/random/w5.png"
     ]
   },
   {
     id: 2,
-    image: "/src/assets/images/random/w2.png",
+    image: "/assets/images/random/w2.png",
     name: "Casement Windows",
     category: "Casement Windows",
     description: "Classic casement design with excellent ventilation control",
@@ -40,16 +40,16 @@ export const windowProducts = [
       "Custom handle and lock options"
     ],
     gallery: [
-      "/src/assets/images/random/w2.png",
-      "/src/assets/images/random/w3.png",
-      "/src/assets/images/random/w4.png",
-      "/src/assets/images/random/w5.png",
-      "/src/assets/images/random/w6.png"
+      "/assets/images/random/w2.png",
+      "/assets/images/random/w3.png",
+      "/assets/images/random/w4.png",
+      "/assets/images/random/w5.png",
+      "/assets/images/random/w6.png"
     ]
   },
   {
     id: 3,
-    image: "/src/assets/images/random/w3.png",
+    image: "/assets/images/random/w3.png",
     name: "Architectural Frame Windows",
     category: "Architectural Windows",
     description: "Large format windows for commercial and residential use",
@@ -64,16 +64,16 @@ export const windowProducts = [
       "Made for modern elevations"
     ],
     gallery: [
-      "/src/assets/images/random/w3.png",
-      "/src/assets/images/random/w4.png",
-      "/src/assets/images/random/w5.png",
-      "/src/assets/images/random/w6.png",
-      "/src/assets/images/random/w7.png"
+      "/assets/images/random/w3.png",
+      "/assets/images/random/w4.png",
+      "/assets/images/random/w5.png",
+      "/assets/images/random/w6.png",
+      "/assets/images/random/w7.png"
     ]
   },
   {
     id: 4,
-    image: "/src/assets/images/random/w4.png",
+    image: "/assets/images/random/w4.png",
     name: "Double Hung Windows",
     category: "Hung Windows",
     description: "Traditional double hung style with modern performance",
@@ -88,16 +88,16 @@ export const windowProducts = [
       "Easy maintenance design"
     ],
     gallery: [
-      "/src/assets/images/random/w4.png",
-      "/src/assets/images/random/w5.png",
-      "/src/assets/images/random/w6.png",
-      "/src/assets/images/random/w7.png",
-      "/src/assets/images/random/w1.png"
+      "/assets/images/random/w4.png",
+      "/assets/images/random/w5.png",
+      "/assets/images/random/w6.png",
+      "/assets/images/random/w7.png",
+      "/assets/images/random/w1.png"
     ]
   },
   {
     id: 5,
-    image: "/src/assets/images/random/w5.png",
+    image: "/assets/images/random/w5.png",
     name: "Picture Windows",
     category: "Fixed Windows",
     description: "Fixed large windows for panoramic views",
@@ -112,16 +112,16 @@ export const windowProducts = [
       "Excellent weather resistance"
     ],
     gallery: [
-      "/src/assets/images/random/w5.png",
-      "/src/assets/images/random/w6.png",
-      "/src/assets/images/random/w7.png",
-      "/src/assets/images/random/w1.png",
-      "/src/assets/images/random/w2.png"
+      "/assets/images/random/w5.png",
+      "/assets/images/random/w6.png",
+      "/assets/images/random/w7.png",
+      "/assets/images/random/w1.png",
+      "/assets/images/random/w2.png"
     ]
   },
   {
     id: 6,
-    image: "/src/assets/images/random/w6.png",
+    image: "/assets/images/random/w6.png",
     name: "Corner Windows",
     category: "Architectural Windows",
     description: "Seamless corner installations for contemporary design",
@@ -136,16 +136,16 @@ export const windowProducts = [
       "Custom fabrication available"
     ],
     gallery: [
-      "/src/assets/images/random/w6.png",
-      "/src/assets/images/random/w7.png",
-      "/src/assets/images/random/w1.png",
-      "/src/assets/images/random/w2.png",
-      "/src/assets/images/random/w3.png"
+      "/assets/images/random/w6.png",
+      "/assets/images/random/w7.png",
+      "/assets/images/random/w1.png",
+      "/assets/images/random/w2.png",
+      "/assets/images/random/w3.png"
     ]
   },
   {
     id: 7,
-    image: "/src/assets/images/random/w7.png",
+    image: "/assets/images/random/w7.png",
     name: "Jalousie Windows",
     category: "Ventilation Windows",
     description: "Adjustable louvre windows for optimal light and ventilation",
@@ -160,16 +160,16 @@ export const windowProducts = [
       "Suitable for all climate conditions"
     ],
     gallery: [
-      "/src/assets/images/random/w7.png",
-      "/src/assets/images/random/w1.png",
-      "/src/assets/images/random/w2.png",
-      "/src/assets/images/random/w3.png",
-      "/src/assets/images/random/w4.png"
+      "/assets/images/random/w7.png",
+      "/assets/images/random/w1.png",
+      "/assets/images/random/w2.png",
+      "/assets/images/random/w3.png",
+      "/assets/images/random/w4.png"
     ]
   },
   {
     id: 8,
-    image: "/src/assets/images/random/win-style.png",
+    image: "/assets/images/random/win-style.png",
     name: "Designer Style Windows",
     category: "Designer Windows",
     description: "Contemporary designer windows with premium aesthetics",
@@ -184,11 +184,12 @@ export const windowProducts = [
       "Customizable design options available"
     ],
     gallery: [
-      "/src/assets/images/random/win-style.png",
-      "/src/assets/images/random/w1.png",
-      "/src/assets/images/random/w2.png",
-      "/src/assets/images/random/w5.png",
-      "/src/assets/images/random/w6.png"
+      "/assets/images/random/win-style.png",
+      "/assets/images/random/w1.png",
+      "/assets/images/random/w2.png",
+      "/assets/images/random/w5.png",
+      "/assets/images/random/w6.png"
     ]
   }
 ];
+
