@@ -1,5 +1,8 @@
-// API Base URL - Replace with your actual backend URL when ready
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// API Base URL - ensures /api suffix even if env is set without it.
+const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = rawApiUrl.endsWith('/api')
+  ? rawApiUrl
+  : `${rawApiUrl.replace(/\/$/, '')}/api`;
 
 // Mock data for development (remove when backend is ready)
 const MOCK_PRODUCTS = {

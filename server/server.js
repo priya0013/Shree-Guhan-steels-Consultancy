@@ -22,15 +22,31 @@ const allowedOrigins = [
     : [])
 ];
 
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+
+  // Allow Vercel preview deployments when FRONTEND_URL contains a Vercel domain.
+  const hasVercelOriginConfigured = allowedOrigins.some((allowed) =>
+    allowed.includes('.vercel.app')
+  );
+  if (hasVercelOriginConfigured && /https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)) {
+    return true;
+  }
+
+  return false;
+};
+
 // Middleware
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
       return callback(new Error('Not allowed by CORS'));
-    }
+    },
+    credentials: true
   })
 );
 app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
