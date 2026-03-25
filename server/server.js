@@ -58,6 +58,10 @@ mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shree-guhan-steels')
   .then(() => {
     console.log('MongoDB connected successfully');
+
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
   })
   .catch((err) => {
     console.error('MongoDB connection error:', err);
@@ -85,7 +89,3 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
