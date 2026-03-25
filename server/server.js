@@ -54,8 +54,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Database Connection
+const mongoUri = process.env.MONGO_URI;
+
+if (!mongoUri) {
+  console.error('MongoDB connection error: MONGO_URI is not set');
+  process.exit(1);
+}
+
 mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shree-guhan-steels')
+  .connect(mongoUri)
   .then(() => {
     console.log('MongoDB connected successfully');
 
