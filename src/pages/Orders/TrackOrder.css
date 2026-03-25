@@ -1,94 +1,97 @@
-.my-orders-page {
+.track-order-page {
   min-height: 70vh;
   padding: 40px 20px;
   background: var(--bg-light);
 }
 
-.orders-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 20px;
+.track-order-card {
+  background: var(--bg-white);
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  padding: 22px;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
-.orders-header h1 {
+.track-order-card h1 {
   margin: 0;
   color: var(--primary-dark);
 }
 
-.orders-btn {
-  border: none;
-  background: var(--accent-orange);
-  color: var(--text-light);
-  padding: 10px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.orders-btn:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.orders-state {
-  background: var(--bg-white);
-  border-radius: 8px;
-  padding: 20px;
+.track-order-card > p {
+  margin: 8px 0 0;
   color: var(--text-secondary);
 }
 
-.orders-link {
-  color: var(--accent-orange);
-  font-weight: 600;
+.track-order-form {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
 }
 
-.orders-error {
+.track-order-form label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.track-order-form input {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.track-order-form input:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 1px rgba(217, 118, 67, 0.2);
+}
+
+.track-order-form button {
+  margin-top: 6px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: var(--accent-orange);
+  color: var(--text-light);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.track-order-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.track-order-error {
+  margin-top: 12px;
   background: #ffe6e6;
   color: #b30000;
   border: 1px solid #ffc7c7;
   border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 16px;
+  padding: 10px;
 }
 
-.orders-list {
-  display: grid;
-  gap: 16px;
+.track-order-result {
+  margin-top: 18px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 14px;
 }
 
-.order-card {
-  background: var(--bg-white);
-  border: 1px solid #ececec;
-  border-radius: 10px;
-  padding: 16px;
-}
-
-.order-card-head {
+.track-order-head {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  gap: 10px;
 }
 
-.order-card-head h3 {
+.track-order-head h2 {
   margin: 0;
-  font-size: 1.1rem;
   color: var(--primary-dark);
+  font-size: 1.05rem;
 }
 
-.order-card-head p {
-  margin: 4px 0 0;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-.order-status {
+.track-status {
   border-radius: 999px;
   padding: 4px 10px;
   text-transform: capitalize;
@@ -109,41 +112,13 @@
   color: #b30000;
 }
 
-.order-meta {
+.track-order-meta {
+  margin: 10px 0 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 10px;
   color: var(--text-secondary);
   font-size: 0.93rem;
-}
-
-.order-items {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.order-item-row {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 12px;
-  font-size: 0.92rem;
-  color: var(--text-primary);
-  background: #fafafa;
-  border-radius: 6px;
-  padding: 8px 10px;
-}
-
-.order-tracking {
-  border-top: 1px solid #f0f0f0;
-  padding-top: 12px;
-}
-
-.order-tracking h4 {
-  margin: 0 0 10px;
-  color: var(--primary-dark);
-  font-size: 0.98rem;
 }
 
 .tracking-steps {
@@ -212,18 +187,28 @@
   font-size: 0.88rem;
 }
 
+.track-order-login-note {
+  margin: 16px 0 0;
+  color: var(--text-secondary);
+}
+
+.track-order-login-note a {
+  color: var(--accent-orange);
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
-  .my-orders-page {
+  .track-order-page {
     padding: 28px 14px;
   }
 
-  .orders-header {
-    flex-direction: column;
-    align-items: flex-start;
+  .track-order-card {
+    padding: 16px;
   }
 
-  .order-item-row {
-    grid-template-columns: 1fr;
+  .track-order-head {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .tracking-steps {

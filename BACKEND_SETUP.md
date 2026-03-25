@@ -31,7 +31,18 @@ JWT_SECRET=your_jwt_secret_key_change_this_in_production
 JWT_EXPIRE=7d
 PORT=5000
 NODE_ENV=development
+
+# Razorpay Payment Gateway
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxx
+RAZORPAY_KEY_SECRET=your_secret_key
+RAZORPAY_WEBHOOK_SECRET=your_webhook_secret
 ```
+
+### 3.1 Razorpay Setup
+1. Create a Razorpay business account and complete KYC.
+2. Use test keys during development and live keys only in production.
+3. Configure a webhook URL: `https://<your-domain>/api/payments/webhook`.
+4. Subscribe to events at minimum: `payment.captured`, `payment.failed`.
 
 ### 4. MongoDB Setup
 
@@ -126,6 +137,29 @@ Server will start on `http://localhost:5000`
 #### Get User Enquiries
 - **GET** `/api/enquiries/user/:userId`
 - Headers: `Authorization: Bearer <token>`
+
+### Payment Routes (`/api/payments`)
+
+#### Create Razorpay Order
+- **POST** `/api/payments/create-order`
+- Body: checkout draft (customer + items)
+
+#### Verify Razorpay Payment and Create Order
+- **POST** `/api/payments/verify`
+- Body:
+```json
+{
+  "razorpay_order_id": "order_xxx",
+  "razorpay_payment_id": "pay_xxx",
+  "razorpay_signature": "signature",
+  "customer": { "fullName": "John", "email": "john@example.com", "phone": "9876543210", "address": "Address", "city": "City", "state": "State", "pincode": "600001" },
+  "items": []
+}
+```
+
+#### Razorpay Webhook
+- **POST** `/api/payments/webhook`
+- Verifies `x-razorpay-signature` and updates payment status.
 
 ## Database Models
 

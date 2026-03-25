@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import enquiryRoutes from './routes/enquiries.js';
 import orderRoutes from './routes/orders.js';
+import paymentRoutes from './routes/payments.js';
 import quoteRoutes from './routes/quotes.js';
 
 // Load environment variables
@@ -13,8 +14,26 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  ...(process.env.FRONTEND_URL
+    ? process.env.FRONTEND_URL.split(',').map((origin) => origin.trim()).filter(Boolean)
+    : [])
+];
+
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    }
+  })
+);
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,6 +52,7 @@ mongoose
 app.use('/api/auth', authRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/payments', paymentRoutes);
 app.use('/api/quotes', quoteRoutes);
 
 // Health check endpoint

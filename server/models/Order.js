@@ -95,12 +95,12 @@ const orderSchema = new mongoose.Schema(
     payment: {
       method: {
         type: String,
-        enum: ['card', 'upi', 'netbanking', 'cod'],
+        enum: ['card', 'upi', 'netbanking', 'cod', 'online'],
         required: [true, 'Payment method is required']
       },
       provider: {
         type: String,
-        enum: ['simulated'],
+        enum: ['simulated', 'razorpay'],
         default: 'simulated'
       },
       status: {
@@ -112,13 +112,13 @@ const orderSchema = new mongoose.Schema(
         type: String,
         required: [true, 'Transaction reference is required']
       },
+      gatewayOrderId: String,
+      gatewayPaymentId: String,
+      gatewaySignature: String,
       last4: String,
       upiHandleMasked: String,
       bankName: String,
-      paidAt: {
-        type: Date,
-        default: Date.now
-      }
+      paidAt: Date
     },
     pricing: {
       subtotal: {
@@ -154,6 +154,33 @@ const orderSchema = new mongoose.Schema(
       type: String,
       enum: ['confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
       default: 'confirmed'
+    },
+    trackingHistory: {
+      type: [
+        {
+          status: {
+            type: String,
+            enum: ['confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
+            required: true
+          },
+          note: {
+            type: String,
+            trim: true,
+            default: ''
+          },
+          updatedAt: {
+            type: Date,
+            default: Date.now
+          }
+        }
+      ],
+      default: () => [
+        {
+          status: 'confirmed',
+          note: 'Order confirmed',
+          updatedAt: new Date()
+        }
+      ]
     }
   },
   { timestamps: true }

@@ -17,6 +17,7 @@ import Payment from "./pages/Payment/Payment";
 import AdminEnquiries from "./pages/Admin/AdminEnquiries";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import MyOrders from "./pages/Orders/MyOrders";
+import TrackOrder from "./pages/Orders/TrackOrder";
 import "./App.css";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/my-orders" element={<MyOrders />} />
+                <Route path="/track-order" element={<TrackOrder />} />
                 <Route path="/admin/enquiries" element={<AdminEnquiries />} />
                 <Route path="/admin/orders" element={<AdminOrders />} />
                 <Route path="/login" element={<Login />} />

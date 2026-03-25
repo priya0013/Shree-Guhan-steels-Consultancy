@@ -245,6 +245,66 @@ class ApiService {
     }
   }
 
+  // Create a Razorpay order for online payment
+  async createPaymentOrder(paymentData) {
+    try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/payments/create-order`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(paymentData)
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to create payment order:', error);
+      throw error;
+    }
+  }
+
+  // Verify Razorpay signature and create final order
+  async verifyPayment(verificationData) {
+    try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/payments/verify`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(verificationData)
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to verify payment:', error);
+      throw error;
+    }
+  }
+
   // Get orders for logged-in customer
   async getMyOrders() {
     try {
@@ -269,6 +329,60 @@ class ApiService {
       return payload;
     } catch (error) {
       console.error('Failed to fetch my orders:', error);
+      throw error;
+    }
+  }
+
+  // Get tracking details for a single order of logged-in user
+  async getOrderTracking(orderId) {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/orders/my/${orderId}/tracking`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to fetch order tracking:', error);
+      throw error;
+    }
+  }
+
+  // Track order for guest users with order ID and phone number
+  async trackOrderPublic({ orderId, phone }) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders/track`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderId: String(orderId || '').trim(),
+          phone: String(phone || '').trim()
+        })
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
+    } catch (error) {
+      console.error('Failed to track order:', error);
       throw error;
     }
   }
@@ -485,5 +599,7 @@ export const {
   getAdminOrders,
   getAdminEnquiries,
   updateEnquiryStatus,
-  updateOrderStatus
+  updateOrderStatus,
+  createPaymentOrder,
+  verifyPayment
 } = apiService;

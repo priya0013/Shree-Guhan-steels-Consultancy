@@ -33,6 +33,14 @@ const buildTransactionRef = () => {
   return `TXN-${randomRef}`;
 };
 
+const statusNotes = {
+  confirmed: 'Order confirmed',
+  processing: 'Order is being processed',
+  shipped: 'Order has been shipped',
+  delivered: 'Order delivered successfully',
+  cancelled: 'Order has been cancelled'
+};
+
 // Create order
 router.post(
   '/',
@@ -45,7 +53,7 @@ router.post(
     body('customer.state', 'State is required').trim().isLength({ min: 2 }),
     body('customer.pincode', 'Valid 6-digit pincode is required').matches(/^[0-9]{6}$/),
     body('items', 'At least one item is required').isArray({ min: 1 }),
-    body('payment.method', 'Valid payment method is required').isIn(['card', 'upi', 'netbanking', 'cod']),
+    body('payment.method', 'Valid payment method is required').isIn(['card', 'upi', 'netbanking', 'cod', 'online']),
     body('pricing.subtotal', 'Subtotal must be a number').isFloat({ min: 0 }),
     body('pricing.tax', 'Tax must be a number').isFloat({ min: 0 }),
     body('pricing.shipping', 'Shipping must be a number').optional().isFloat({ min: 0 }),
@@ -76,13 +84,17 @@ router.post(
         type: item.type === 'door' || item.type === 'window' ? item.type : 'other'
       }));
 
+      const isCodOrder = payment.method === 'cod';
       const safePayment = {
         method: payment.method,
         provider: 'simulated',
-        status: 'paid',
-        transactionRef: buildTransactionRef(),
-        paidAt: new Date()
+        status: isCodOrder ? 'pending' : 'paid',
+        transactionRef: buildTransactionRef()
       };
+
+      if (!isCodOrder) {
+        safePayment.paidAt = new Date();
+      }
 
       if (payment.method === 'card' && payment.last4) {
         safePayment.last4 = String(payment.last4);
@@ -107,7 +119,14 @@ router.post(
           shipping: Number(pricing.shipping || 0),
           total: Number(pricing.total)
         },
-        currency: currency || 'INR'
+        currency: currency || 'INR',
+        trackingHistory: [
+          {
+            status: 'confirmed',
+            note: statusNotes.confirmed,
+            updatedAt: new Date()
+          }
+        ]
       });
 
       if (req.headers.authorization) {
@@ -164,6 +183,63 @@ router.get('/my', protect, async (req, res) => {
   }
 });
 
+// Track order for guests using order ID and phone number
+router.post(
+  '/track',
+  [
+    body('orderId', 'Order ID is required').trim().isLength({ min: 6 }),
+    body('phone', 'Valid 10-digit phone number is required').trim().matches(/^[0-9]{10}$/)
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success: false, errors: errors.array() });
+    }
+
+    try {
+      const orderId = String(req.body.orderId || '').trim().toUpperCase();
+      const phone = String(req.body.phone || '').trim();
+
+      const order = await Order.findOne({
+        orderId,
+        'customer.phone': phone
+      }).select('orderId status trackingHistory createdAt updatedAt items pricing currency');
+
+      if (!order) {
+        return res.status(404).json({ success: false, message: 'Order not found. Please verify your order ID and phone number.' });
+      }
+
+      return res.status(200).json({ success: true, order });
+    } catch (error) {
+      return res.status(500).json({ success: false, message: error.message || 'Server error' });
+    }
+  }
+);
+
+// Get tracking details for a single order of current user
+router.get('/my/:orderId/tracking', protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('email');
+    const userEmail = String(user?.email || '').toLowerCase();
+
+    const order = await Order.findOne({
+      orderId: req.params.orderId,
+      $or: [
+        { userId: req.userId },
+        ...(userEmail ? [{ 'customer.email': userEmail }] : [])
+      ]
+    }).select('orderId status trackingHistory createdAt updatedAt');
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    return res.status(200).json({ success: true, order });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message || 'Server error' });
+  }
+});
+
 // Get all orders (admin only)
 router.get('/', protect, requireAdmin, async (req, res) => {
   try {
@@ -187,14 +263,21 @@ router.patch(
     }
 
     try {
-      const order = await Order.findByIdAndUpdate(
-        req.params.id,
-        { status: req.body.status },
-        { new: true }
-      );
+      const order = await Order.findById(req.params.id);
 
       if (!order) {
         return res.status(404).json({ success: false, message: 'Order not found' });
+      }
+
+      if (order.status !== req.body.status) {
+        order.status = req.body.status;
+        order.trackingHistory = Array.isArray(order.trackingHistory) ? order.trackingHistory : [];
+        order.trackingHistory.push({
+          status: req.body.status,
+          note: statusNotes[req.body.status] || `Order status updated to ${req.body.status}`,
+          updatedAt: new Date()
+        });
+        await order.save();
       }
 
       return res.status(200).json({ success: true, order });

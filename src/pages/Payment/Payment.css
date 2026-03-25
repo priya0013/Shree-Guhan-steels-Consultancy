@@ -111,6 +111,10 @@
   margin-bottom: 25px;
 }
 
+.payment-methods.cod-only {
+  grid-template-columns: 1fr;
+}
+
 .payment-method-btn {
   display: flex;
   align-items: center;
